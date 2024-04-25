@@ -1,5 +1,9 @@
 
-namespace DemoCovadis
+using CovadisAPI.Context;
+using CovadisAPI.Services;
+using Microsoft.EntityFrameworkCore;
+
+namespace CovadisAPI
 {
     public class Program
     {
@@ -13,6 +17,15 @@ namespace DemoCovadis
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Add services
+            builder.Services.AddTransient<UserService>();
+
+            // Add database context
+            builder.Services.AddDbContext<LeenAutoDbContext>(options =>
+            {
+                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             var app = builder.Build();
 
