@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoCovadis.Migrations
 {
     [DbContext(typeof(LeenAutoDbContext))]
-    [Migration("20240425113421_InnitialCreate")]
-    partial class InnitialCreate
+    [Migration("20240508085748_user")]
+    partial class user
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,11 +29,11 @@ namespace DemoCovadis.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Naam")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Wachtwoord")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

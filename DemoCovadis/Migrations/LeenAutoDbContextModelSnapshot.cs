@@ -26,11 +26,11 @@ namespace DemoCovadis.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Naam")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Wachtwoord")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

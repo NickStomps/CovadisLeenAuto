@@ -5,7 +5,7 @@
 namespace DemoCovadis.Migrations
 {
     /// <inheritdoc />
-    public partial class InnitialCreate : Migration
+    public partial class user : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,9 +16,9 @@ namespace DemoCovadis.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Naam = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: false)
+                    Wachtwoord = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

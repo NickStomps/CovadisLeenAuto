@@ -34,17 +34,6 @@ namespace CovadisAPI.Controllers
             var createdUser = userService.CreateUser(user);
             return Ok(createdUser);
         }
-
-        //[HttpGet(Name = "Users")]
-        //public IActionResult Get()
-        //{
-        //    var usersDtos = userService.Select(user => new UserDto
-        //    {
-        //        Name = user.Name,
-        //        Email = user.Email
-        //    });
-        //    return Ok(usersDtos);
-        //}
     }
 
 }
