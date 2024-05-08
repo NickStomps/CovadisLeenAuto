@@ -17,7 +17,7 @@ namespace CovadisAPI.Services
             return dbContext.Users.Select(x => new UserDto
             {
                 Id = x.Id,
-                Name = x.Name,
+                Naam = x.Naam,
                 Email = x.Email
             });
 
@@ -30,7 +30,7 @@ namespace CovadisAPI.Services
             return new UserDto
             { 
                 Id = user.Id,
-                Name = user.Name,
+                Naam = user.Naam,
                 Email = user.Email
             };
 
