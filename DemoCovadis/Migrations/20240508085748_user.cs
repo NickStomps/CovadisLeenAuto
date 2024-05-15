@@ -24,7 +24,12 @@ namespace DemoCovadis.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
-        }
+
+            migrationBuilder.InsertData(
+            table: "Users",
+            columns: new[] { "Id", "Naam", "Email", "Wachtwoord" },
+            values: new object[] { 1, "Admin", "admin@mail.com", "adminpassword" });
+            }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)

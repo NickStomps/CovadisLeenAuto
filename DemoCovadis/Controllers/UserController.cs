@@ -1,10 +1,12 @@
 using CovadisAPI.Entities;
 using CovadisAPI.Services;
 using DemoCovadis.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CovadisAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
