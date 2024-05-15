@@ -3,6 +3,7 @@ namespace DemoCovadis.Entities
 {
     public class Auto
     {
+        //test
         public string kenteken { get; set; }
         public int beginStandKm { get; set; }
         public int eindStandKm { get; set; }
