@@ -12,6 +12,20 @@ namespace DemoCovadis.Services
             this.dbContext = dbContext;
         }
 
+        public IEnumerable<Auto> GetAutos()
+        {
+            return dbContext.Autos.Select(x => new Auto
+            {
+                kenteken = x.kenteken,
+                beginStandKm = x.beginStandKm,
+                eindStandKm = x.eindStandKm,
+                bestuurder = x.bestuurder,beginAdres = x.beginAdres,
+                eindAdres = x.eindAdres,
+                vertrekTijd = x.vertrekTijd, 
+                aankomstTijd = x.aankomstTijd
+            });
+
+        }
 
     }
 }
