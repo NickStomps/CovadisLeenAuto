@@ -1,4 +1,5 @@
 ﻿using CovadisAPI.Services;
+using DemoCovadis.Entities;
 using DemoCovadis.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoCovadis.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class AutoController : ControllerBase
@@ -21,8 +21,15 @@ namespace DemoCovadis.Controllers
         [HttpGet]
         public IActionResult GetAutos()
         {
-            var autos = AutoService.getAutos();
+            var autos = autoService.GetAutos();
             return Ok(autos);
+        }
+
+        [HttpPost]
+        public IActionResult SetAuto([FromBody] Auto auto)
+        {
+            var createdAuto = autoService.CreateAuto(auto);
+            return Ok(createdAuto);
         }
     }
 }

@@ -1,5 +1,6 @@
 using CovadisAPI.Context;
 using CovadisAPI.Services;
+using DemoCovadis.Services;
 using GraafschapLeenAuto.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +52,7 @@ namespace CovadisAPI
             services.AddTransient<UserService>();
             services.AddTransient<AuthService>();
             services.AddTransient<TokenService>();
+            services.AddTransient<AutoService>();
 
             // Add database context
             services.AddDbContext<LeenAutoDbContext>(options =>
