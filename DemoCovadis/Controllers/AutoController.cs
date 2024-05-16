@@ -18,11 +18,6 @@ namespace DemoCovadis.Controllers
             this.autoService = autoService;
 
         }
-        [HttpGet]
-        public IActionResult GetAutos()
-        {
-            var autos = AutoService.getAutos();
-            return Ok(autos);
-        }
+
     }
 }

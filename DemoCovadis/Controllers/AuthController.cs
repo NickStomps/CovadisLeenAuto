@@ -1,26 +1,33 @@
 ﻿using GraafschapLeenAuto.Api.Services;
 using GraafschapLeenAuto.Shared;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GraafschapLeenAuto.Api.Controllers;
-
-[AllowAnonymous]
-[Controller]
-[Route("[controller]")]
-public class AuthController(AuthService authService) : ControllerBase
+namespace GraafschapLeenAuto.Api.Controllers
 {
-    [HttpPost]
-    public IActionResult Login([FromBody] LoginRequest request)
+    [AllowAnonymous]
+    [ApiController]
+    [Route("[controller]")]
+    public class AuthController : ControllerBase
     {
-        var response = authService.Login(request);
+        private readonly AuthService _authService;
 
-        if (response == null)
+        public AuthController(AuthService authService)
         {
-            return Unauthorized();
+            _authService = authService;
         }
 
-        return Ok(response);
+        [HttpPost]
+        public IActionResult Login([FromBody] LoginRequest request)
+        {
+            var response = _authService.Login(request);
+
+            if (response == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(response);
+        }
     }
 }
