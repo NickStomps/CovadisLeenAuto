@@ -47,23 +47,17 @@ namespace DemoCovadis.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     kenteken = table.Column<string>(type: "TEXT", nullable: false),
-                    beginStandKm = table.Column<int>(type: "INTEGER", nullable: false),
-                    eindStandKm = table.Column<int>(type: "INTEGER", nullable: false),
-                    bestuurderId = table.Column<int>(type: "INTEGER", nullable: false),
-                    beginAdres = table.Column<string>(type: "TEXT", nullable: false),
-                    eindAdres = table.Column<string>(type: "TEXT", nullable: false),
-                    vertrekTijd = table.Column<string>(type: "TEXT", nullable: false),
-                    aankomstTijd = table.Column<string>(type: "TEXT", nullable: false)
+                    kilometerStand = table.Column<int>(type: "INTEGER", nullable: false),
+                    laatsteBestuurderId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Autos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Autos_Users_bestuurderId",
-                        column: x => x.bestuurderId,
+                        name: "FK_Autos_Users_laatsteBestuurderId",
+                        column: x => x.laatsteBestuurderId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -90,6 +84,37 @@ namespace DemoCovadis.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Ritten",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    AutoId = table.Column<int>(type: "INTEGER", nullable: false),
+                    kilometerGereden = table.Column<int>(type: "INTEGER", nullable: false),
+                    bestuurderId = table.Column<int>(type: "INTEGER", nullable: false),
+                    beginAdres = table.Column<string>(type: "TEXT", nullable: false),
+                    eindAdres = table.Column<string>(type: "TEXT", nullable: false),
+                    vertrekTijd = table.Column<string>(type: "TEXT", nullable: false),
+                    aankomstTijd = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ritten", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Ritten_Autos_AutoId",
+                        column: x => x.AutoId,
+                        principalTable: "Autos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ritten_Users_bestuurderId",
+                        column: x => x.bestuurderId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "Naam" },
@@ -102,12 +127,25 @@ namespace DemoCovadis.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "Naam", "Wachtwoord" },
-                values: new object[] { 2, "user@example.com", "User", "UserPassword" });
-
+                values: new object[,]
+                {
+                    { 1, "admin@example.com", "Admin", "AdminPassword" },
+                    { 2, "user@example.com", "User", "UserPassword" }
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Autos_bestuurderId",
+                name: "IX_Autos_laatsteBestuurderId",
                 table: "Autos",
+                column: "laatsteBestuurderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ritten_AutoId",
+                table: "Ritten",
+                column: "AutoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ritten_bestuurderId",
+                table: "Ritten",
                 column: "bestuurderId");
 
             migrationBuilder.CreateIndex(
@@ -120,10 +158,13 @@ namespace DemoCovadis.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Autos");
+                name: "Ritten");
 
             migrationBuilder.DropTable(
                 name: "RoleUser");
+
+            migrationBuilder.DropTable(
+                name: "Autos");
 
             migrationBuilder.DropTable(
                 name: "Roles");
