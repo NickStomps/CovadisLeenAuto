@@ -3,6 +3,7 @@ using CovadisAPI.Services;
 using DemoCovadis.Services;
 using GraafschapLeenAuto.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -52,7 +53,6 @@ namespace CovadisAPI
             services.AddTransient<UserService>();
             services.AddTransient<AuthService>();
             services.AddTransient<TokenService>();
-            services.AddTransient<AutoService>();
 
             // Add database context
             services.AddDbContext<LeenAutoDbContext>(options =>
@@ -60,7 +60,7 @@ namespace CovadisAPI
                 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>
                {
                    options.TokenValidationParameters = new TokenValidationParameters
@@ -76,19 +76,27 @@ namespace CovadisAPI
                    };
                });
 
+            services.AddAuthorizationBuilder()
+               .SetFallbackPolicy(new AuthorizationPolicyBuilder()
+               .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+               .RequireAuthenticatedUser()
+               .Build());
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
+
                 app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoCovadis.Migrations
 {
     [DbContext(typeof(LeenAutoDbContext))]
-    [Migration("20240522085323_auto's")]
-    partial class autos
+    [Migration("20240523105713_admin")]
+    partial class admin
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,22 @@ namespace DemoCovadis.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Email = "user@example.com",
+                            Naam = "User",
+                            Wachtwoord = "UserPassword"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin@example.com",
+                            Naam = "Admin",
+                            Wachtwoord = "AdminPassword"
+                        });
                 });
 
             modelBuilder.Entity("DemoCovadis.Entities.Auto", b =>
@@ -84,6 +100,48 @@ namespace DemoCovadis.Migrations
                     b.ToTable("Autos");
                 });
 
+            modelBuilder.Entity("DemoCovadis.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Naam")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Naam = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Naam = "User"
+                        });
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<int>("RolesId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("RoleUser");
+                });
+
             modelBuilder.Entity("DemoCovadis.Entities.Auto", b =>
                 {
                     b.HasOne("CovadisAPI.Entities.User", "bestuurder")
@@ -93,6 +151,21 @@ namespace DemoCovadis.Migrations
                         .IsRequired();
 
                     b.Navigation("bestuurder");
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.HasOne("DemoCovadis.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CovadisAPI.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

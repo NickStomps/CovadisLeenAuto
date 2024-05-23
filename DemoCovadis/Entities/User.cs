@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DemoCovadis.Entities;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
 namespace CovadisAPI.Entities
 {
     public class User
@@ -11,5 +13,7 @@ namespace CovadisAPI.Entities
         public string Email { get; set; }
         [Required]
         public string Wachtwoord { get; set; }
+
+        public virtual List<Role> Roles { get; set; } = new List<Role>();
     }
 }

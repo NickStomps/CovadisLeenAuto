@@ -1,16 +1,15 @@
 ﻿using CovadisAPI.Context;
 using CovadisAPI.Entities;
-using DemoCovadis.Shared;
+using DemoCovadis.Shared.Dtos;
+using DemoCovadis.Shared.Requests;
+using DemoCovadis.Shared.Responses;
+using Microsoft.EntityFrameworkCore;
 
 namespace CovadisAPI.Services
 {
-    public class UserService
+    public class UserService(LeenAutoDbContext dbContext)
     {
-        private readonly LeenAutoDbContext dbContext;
-        public UserService(LeenAutoDbContext dbContext) 
-        {
-            this.dbContext = dbContext;
-        }
+        private readonly LeenAutoDbContext dbContext = dbContext;
 
         public IEnumerable<UserDto> GetUsers()
         {
@@ -20,20 +19,68 @@ namespace CovadisAPI.Services
                 Naam = x.Naam,
                 Email = x.Email
             });
-
         }
-        public UserDto CreateUser(User user) 
+
+        public UserDto? GetUserById(int id)
+        {
+            var user = dbContext.Users.Find(id);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserDto
+            {
+                Id = user.Id,
+                Naam = user.Naam,
+                Email = user.Email
+            };
+        }
+
+        public UserDto CreateUser(User user)
         {
             dbContext.Users.Add(user);
             dbContext.SaveChanges();
 
             return new UserDto
-            { 
+            {
                 Id = user.Id,
                 Naam = user.Naam,
                 Email = user.Email
             };
+        }
 
+        public UserDto? UpdateUser(int id, User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public AssignRoleResponse? AssignRole(AssignRoleRequest request)
+        {
+            var user = dbContext.Users
+                .Include(x => x.Roles)
+                .FirstOrDefault(x => x.Id == request.UserId);
+            var role = dbContext.Roles.Find(request.RoleId);
+
+            if (user == null || role == null)
+            {
+                return null;
+            }
+
+            if (user.Roles.Contains(role))
+            {
+                throw new ArgumentException("User already assigned to role");
+            }
+
+            user.Roles.Add(role);
+            dbContext.SaveChanges();
+
+            return new AssignRoleResponse
+            {
+                UserName = user.Naam,
+                RoleName = role.Naam,
+            };
         }
     }
 }
