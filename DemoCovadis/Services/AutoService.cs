@@ -18,13 +18,9 @@ namespace DemoCovadis.Services
             return dbContext.Autos.Select(x => new Auto
             {
                 kenteken = x.kenteken,
-                beginStandKm = x.beginStandKm,
-                eindStandKm = x.eindStandKm,
-                bestuurder = x.bestuurder,
-                beginAdres = x.beginAdres,
-                eindAdres = x.eindAdres,
-                vertrekTijd = x.vertrekTijd,
-                aankomstTijd = x.aankomstTijd
+                kilometerStand = x.kilometerStand,
+                laatsteBestuurder = x.laatsteBestuurder
+
             });
         }
 
@@ -36,13 +32,8 @@ namespace DemoCovadis.Services
             yield return new Auto
             {
                 kenteken = auto.kenteken,
-                beginStandKm = auto.beginStandKm,
-                eindStandKm = auto.eindStandKm,
-                bestuurder = auto.bestuurder,
-                beginAdres = auto.beginAdres,
-                eindAdres = auto.eindAdres,
-                vertrekTijd = auto.vertrekTijd,
-                aankomstTijd = auto.aankomstTijd
+                kilometerStand = auto.kilometerStand,
+                laatsteBestuurder = auto.laatsteBestuurder
             };
         }
     }
