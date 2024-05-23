@@ -10,6 +10,8 @@ namespace CovadisAPI.Context
 
         public DbSet<Auto> Autos { get; set; }
 
+        public DbSet<Rit> Ritten { get; set; }
+
         public LeenAutoDbContext(DbContextOptions<LeenAutoDbContext> options) : base(options)
         {
 
