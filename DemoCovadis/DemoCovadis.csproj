@@ -25,4 +25,8 @@
     <ProjectReference Include="..\DemoCovadis.Shared\DemoCovadis.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

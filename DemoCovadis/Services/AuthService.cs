@@ -1,7 +1,7 @@
 ﻿using CovadisAPI.Context;
 using CovadisAPI.Entities;
-using DemoCovadis.Shared;
-using GraafschapLeenAuto.Shared;
+using DemoCovadis.Shared.Requests;
+using DemoCovadis.Shared.Responses;
 
 namespace GraafschapLeenAuto.Api.Services;
 

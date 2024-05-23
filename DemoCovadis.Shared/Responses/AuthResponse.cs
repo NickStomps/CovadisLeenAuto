@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DemoCovadis.Shared
+namespace DemoCovadis.Shared.Responses
 {
     public class AuthResponse
     {

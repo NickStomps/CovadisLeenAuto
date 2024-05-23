@@ -2,6 +2,7 @@
 using CovadisAPI.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoCovadis.Migrations
 {
     [DbContext(typeof(LeenAutoDbContext))]
-    partial class LeenAutoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240523105324_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -45,13 +48,6 @@ namespace DemoCovadis.Migrations
                             Email = "user@example.com",
                             Naam = "User",
                             Wachtwoord = "UserPassword"
-                        },
-                        new
-                        {
-                            Id = 1,
-                            Email = "admin@example.com",
-                            Naam = "Admin",
-                            Wachtwoord = "AdminPassword"
                         });
                 });
 

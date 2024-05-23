@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using System.ComponentModel.DataAnnotations;
 
-namespace GraafschapLeenAuto.Shared;
+namespace DemoCovadis.Shared.Requests;
 
 public class LoginRequest
 {
