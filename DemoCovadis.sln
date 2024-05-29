@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoCovadis", "DemoCovadis\DemoCovadis.csproj", "{2BE1AA83-3335-4B6C-9748-B8BFC6A78A56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCovadis", "DemoCovadis\DemoCovadis.csproj", "{2BE1AA83-3335-4B6C-9748-B8BFC6A78A56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoCovadis.Shared", "DemoCovadis.Shared\DemoCovadis.Shared.csproj", "{F1AD571F-6EA9-488D-A74C-AF9D3C41E977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCovadis.Shared", "DemoCovadis.Shared\DemoCovadis.Shared.csproj", "{F1AD571F-6EA9-488D-A74C-AF9D3C41E977}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovadisLeenAuto.blazor", "CovadisLeenAuto.blazor\CovadisLeenAuto.blazor.csproj", "{78FFF7CE-F8D0-41C4-90A9-37756760623C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F1AD571F-6EA9-488D-A74C-AF9D3C41E977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1AD571F-6EA9-488D-A74C-AF9D3C41E977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1AD571F-6EA9-488D-A74C-AF9D3C41E977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78FFF7CE-F8D0-41C4-90A9-37756760623C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78FFF7CE-F8D0-41C4-90A9-37756760623C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78FFF7CE-F8D0-41C4-90A9-37756760623C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78FFF7CE-F8D0-41C4-90A9-37756760623C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

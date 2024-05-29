@@ -1,0 +1,43 @@
+﻿@page "/"
+
+@using DemoCovadis.Shared.Dtos;
+@using DemoCovadis.Shared.Clients;
+@using CovadisLeenAuto.blazor.Components;
+@inject UserHttpClient UserHttpClient;
+
+
+
+<PageTitle>Login</PageTitle>
+<PageHeader Size="PageHeader.Sizes.H2">Users</PageHeader>
+
+@if (Users != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Naam</td>
+                    <td>@user.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code{
+    public UserDto[] Users { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Users = await UserHttpClient.GetUsers();
+    }
+}
