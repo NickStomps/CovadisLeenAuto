@@ -45,7 +45,7 @@ public class UserController(UserService userService) : ControllerBase
         throw new NotImplementedException();
     }
 
-    [Authorize(Roles = nameof(UserRole.Admin) + "," + nameof(UserRole.User))]
+    [Authorize(Roles = nameof(UserRole.Admin))]
     [HttpPatch("assign-role")]
     public IActionResult AssignRole([FromBody] AssignRoleRequest request)
     {

@@ -9,6 +9,7 @@ using DemoCovadis.Shared.Enums;
 
 public class TokenService(IConfiguration configuration, LeenAutoDbContext dbContext)
 {
+    private readonly LeenAutoDbContext dbContext = dbContext;
     private readonly SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!));
 
     public string CreateToken(User user)
