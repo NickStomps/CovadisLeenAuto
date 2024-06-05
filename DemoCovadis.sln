@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCovadis", "DemoCovadis\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCovadis.Shared", "DemoCovadis.Shared\DemoCovadis.Shared.csproj", "{F1AD571F-6EA9-488D-A74C-AF9D3C41E977}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCovadis.Blazor", "CovadisLeenAuto.blazor\DemoCovadis.Blazor.csproj", "{78FFF7CE-F8D0-41C4-90A9-37756760623C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCovadis.Blazor", "DemoCovadis.blazor\DemoCovadis.Blazor.csproj", "{78FFF7CE-F8D0-41C4-90A9-37756760623C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
