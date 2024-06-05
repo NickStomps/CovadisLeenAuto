@@ -1,11 +1,15 @@
-﻿using CovadisAPI.Entities;
-using System.Security.Claims;
-using System.Text;
+﻿namespace DemoCovadis.Api.Services;
+
+using CovadisAPI.Context;
+using CovadisAPI.Entities;
+using DemoCovadis.Shared.Constants;
+using DemoCovadis.Shared.Enums;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.EntityFrameworkCore;
-using CovadisAPI.Context;
-using DemoCovadis.Shared.Enums;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
 
 public class TokenService(IConfiguration configuration, LeenAutoDbContext dbContext)
 {
@@ -20,10 +24,10 @@ public class TokenService(IConfiguration configuration, LeenAutoDbContext dbCont
 
         var claims = new List<Claim>
         {
-            new Claim("id", user.Id.ToString()),
-            new Claim("naam", user.Naam),
-            new Claim(nameof(User.Email).ToLower(), user.Email),
-            new Claim("roles", getRoles(user))
+            new Claim(Claims.Id, user.Id.ToString()),
+            new Claim(Claims.Naam, user.Naam),
+            new Claim(Claims.Email, user.Email),
+            new Claim(Claims.Role, getRoles(user))
         };
 
         var singingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);

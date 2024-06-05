@@ -1,10 +1,10 @@
 ﻿using DemoCovadis.Shared.Enums;
 using DemoCovadis.Shared.Requests;
-using GraafschapLeenAuto.Api.Services;
+using DemoCovadis.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GraafschapLeenAuto.Api.Controllers;
+namespace DemoCovadis.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

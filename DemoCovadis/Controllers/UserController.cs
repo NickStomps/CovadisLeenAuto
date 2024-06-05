@@ -14,7 +14,6 @@ public class UserController(UserService userService) : ControllerBase
 {
     private readonly UserService userService = userService;
 
-    [AllowAnonymous]
     [HttpGet]
     public IActionResult GetUsers()
     {
@@ -26,7 +25,8 @@ public class UserController(UserService userService) : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetUser(int id)
     {
-        throw new NotImplementedException();
+        var user = userService.GetUserById(id);
+        return Ok(user);
     }
 
     [Authorize(Roles = nameof(UserRole.Admin))]
@@ -45,7 +45,7 @@ public class UserController(UserService userService) : ControllerBase
         throw new NotImplementedException();
     }
 
-    [Authorize(Roles = nameof(UserRole.Admin))]
+    [Authorize(Roles = nameof(UserRole.Admin) + "," + nameof(UserRole.User))]
     [HttpPatch("assign-role")]
     public IActionResult AssignRole([FromBody] AssignRoleRequest request)
     {

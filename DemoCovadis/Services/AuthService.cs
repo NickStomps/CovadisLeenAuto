@@ -3,7 +3,7 @@ using CovadisAPI.Entities;
 using DemoCovadis.Shared.Requests;
 using DemoCovadis.Shared.Responses;
 
-namespace GraafschapLeenAuto.Api.Services;
+namespace DemoCovadis.Api.Services;
 
 public class AuthService(LeenAutoDbContext dbContext, TokenService tokenService)
 {

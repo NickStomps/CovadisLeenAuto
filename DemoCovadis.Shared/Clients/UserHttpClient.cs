@@ -10,7 +10,7 @@ public class UserHttpClient
 
     public UserHttpClient(IHttpClientFactory httpClientFactory)
     {
-        client = httpClientFactory.CreateClient();
+        client = httpClientFactory.CreateClient(nameof(UserHttpClient));
         client.BaseAddress = new Uri("http://localhost:5077/User");
 
         jsonOptions = new JsonSerializerOptions

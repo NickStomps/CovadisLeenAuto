@@ -1,14 +1,15 @@
 ﻿@page "/"
+@inject UserHttpClient UserHttpClient;
+@attribute [Authorize]
 
 @using DemoCovadis.Shared.Dtos;
 @using DemoCovadis.Shared.Clients;
-@using CovadisLeenAuto.blazor.Components;
-@inject UserHttpClient UserHttpClient;
+@using DemoCovadis.Blazor.Components
+@using Microsoft.AspNetCore.Authorization
 
 
-
-<PageTitle>Login</PageTitle>
-<PageHeader Size="PageHeader.Sizes.H2">Users</PageHeader>
+<PageTitle>Home</PageTitle>
+<PageHeader><h5>Users</h5></PageHeader>
 
 @if (Users != null)
 {
@@ -16,8 +17,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Naam</th>
                 <th>Email</th>
+                <th>Role</th>
             </tr>
         </thead>
         <tbody>

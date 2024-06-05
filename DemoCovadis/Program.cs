@@ -1,40 +1,40 @@
+namespace CovadisAPI;
+
 using CovadisAPI.Context;
 using CovadisAPI.Services;
-using DemoCovadis.Services;
-using GraafschapLeenAuto.Api.Services;
+using DemoCovadis.Api.Context;
+using DemoCovadis.Api.Services;
+using DemoCovadis.Shared.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using System.Text.Json.Serialization;
 
-namespace CovadisAPI
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+        var services = builder.Services;
+
+        // Add services to the container.
+
+        services.AddControllers();
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(options =>
         {
-            var builder = WebApplication.CreateBuilder(args);
-            var services = builder.Services;
-
-            // Add services to the container.
-
-            services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen(options =>
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
             {
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please insert JWT with Bearer into field",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
-                });
+                In = ParameterLocation.Header,
+                Description = "Please insert JWT with Bearer into field",
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey
+            });
 
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement()
             {
                 {
                     new OpenApiSecurityScheme
@@ -48,72 +48,74 @@ namespace CovadisAPI
                     Array.Empty<string>()
                 }
             });
-            });
+        });
 
-            // Add services
-            services.AddTransient<UserService>();
-            services.AddTransient<AuthService>();
-            services.AddTransient<TokenService>();
+        // Add services
+        services.AddTransient<UserService>();
+        services.AddTransient<AuthService>();
+        services.AddTransient<TokenService>();
+        services.AddScoped<ICurrentUserContext, CurrentUserContext>();
 
-            // Add database context
-            services.AddDbContext<LeenAutoDbContext>(options =>
-            {
-                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
+        // Add database context
+        services.AddDbContext<LeenAutoDbContext>(options =>
+        {
+            options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+        });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-               .AddJwtBearer(options =>
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+           .AddJwtBearer(options =>
+           {
+               options.TokenValidationParameters = new TokenValidationParameters
                {
-                   options.TokenValidationParameters = new TokenValidationParameters
-                   {
-                       ValidateIssuer = true,
-                       ValidateAudience = true,
-                       ValidateLifetime = true,
-                       ValidateIssuerSigningKey = true,
-                       ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                       ValidAudience = builder.Configuration["Jwt:Audience"],
-                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
-                       ClockSkew = TimeSpan.Zero,
-                   };
-               });
+                   ValidateIssuer = true,
+                   ValidateAudience = true,
+                   ValidateLifetime = true,
+                   ValidateIssuerSigningKey = true,
+                   ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                   ValidAudience = builder.Configuration["Jwt:Audience"],
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+                   ClockSkew = TimeSpan.Zero,
+               };
+           });
 
-            services.AddAuthorizationBuilder()
-               .SetFallbackPolicy(new AuthorizationPolicyBuilder()
-               .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-               .RequireAuthenticatedUser()
-               .Build());
+        services.AddAuthorizationBuilder()
+           .SetFallbackPolicy(new AuthorizationPolicyBuilder()
+           .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+           .RequireAuthenticatedUser()
+           .Build());
 
-            services.AddCors(options =>
+        services.AddHttpContextAccessor();
+
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
             {
-                options.AddDefaultPolicy(builder =>
-                {
-                    builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                });
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
             });
+        });
 
-            var app = builder.Build();
+        var app = builder.Build();
 
-            app.UseCors();
+        app.UseCors();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
 
-                app.UseSwaggerUI();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthentication();
-
-            app.UseAuthorization();
-
-            app.MapControllers();
-
-            app.Run();
+            app.UseSwaggerUI();
         }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthentication();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
     }
 }

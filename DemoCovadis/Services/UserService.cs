@@ -1,13 +1,15 @@
 ﻿using CovadisAPI.Context;
 using CovadisAPI.Entities;
 using DemoCovadis.Shared.Dtos;
+using DemoCovadis.Shared.Enums;
+using DemoCovadis.Shared.Interfaces;
 using DemoCovadis.Shared.Requests;
 using DemoCovadis.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace CovadisAPI.Services
 {
-    public class UserService(LeenAutoDbContext dbContext)
+    public class UserService(LeenAutoDbContext dbContext, ICurrentUserContext userContext)
     {
         private readonly LeenAutoDbContext dbContext = dbContext;
 
@@ -23,6 +25,11 @@ namespace CovadisAPI.Services
 
         public UserDto? GetUserById(int id)
         {
+            if (userContext.IsInRole(nameof(UserRole.User)))
+            {
+                id = userContext.User.Id;
+            }
+
             var user = dbContext.Users.Find(id);
 
             if (user == null)
