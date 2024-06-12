@@ -36,9 +36,15 @@
 
 @code{
     public UserDto[] Users { get; set; }
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("OnInitialized");
+        //Users = UserHttpClient.GetUsers();
+    }
 
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine("OnInitializedAsync");
         Users = await UserHttpClient.GetUsers();
     }
 }
