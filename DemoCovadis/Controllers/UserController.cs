@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CovadisAPI.Controllers;
 
+[AllowAnonymous]
 [ApiController]
 [Route("[controller]")]
 public class UserController(UserService userService) : ControllerBase
