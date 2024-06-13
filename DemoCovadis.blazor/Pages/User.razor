@@ -1,0 +1,50 @@
+﻿@page "/user"
+@inject UserHttpClient UserHttpClient;
+@attribute [Authorize]
+
+@using DemoCovadis.Shared.Dtos;
+@using DemoCovadis.Shared.Clients;
+@using DemoCovadis.Blazor.Components
+@using Microsoft.AspNetCore.Authorization
+
+
+<PageTitle>Home</PageTitle>
+<PageHeader><h5>Users</h5></PageHeader>
+
+@if (Users != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Naam</td>
+                    <td>@user.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    public UserDto[] Users { get; set; }
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("OnInitialized");
+        //Users = UserHttpClient.GetUsers();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("OnInitializedAsync");
+        Users = await UserHttpClient.GetUsers();
+    }
+}
