@@ -26,6 +26,9 @@ namespace DemoCovadis.Blazor
             builder.Services.AddScoped<UserHttpClient>();
             builder.Services.AddHttpClient(nameof(UserHttpClient)).AddHttpMessageHandler<AuthorizationMessageHandler>();
 
+            builder.Services.AddScoped<RitHttpClient>();
+            builder.Services.AddHttpClient(nameof(RitHttpClient)).AddHttpMessageHandler<AuthorizationMessageHandler>();
+
             builder.Services.AddScoped<AuthHttpClient>();
 
             builder.Services.AddScoped<DemoCovadisAuthenticationStateProvider>();

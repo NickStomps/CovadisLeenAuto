@@ -1,9 +1,9 @@
-﻿using DemoCovadis.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using DemoCovadis.Shared.Dtos;
 
-namespace DemoCovadis.Entities
+namespace DemoCovadis.Shared.Dtos
 {
-    public class Rit
+    public class RitDto
     {
         [Key]
         public int id { get; set; }
@@ -11,11 +11,11 @@ namespace DemoCovadis.Entities
         public int AutoId { get; set; }
 
         [Required]
-        public virtual Auto? auto { get; set; }
+        public virtual AutoDto? auto { get; set; }
         [Required]
         public int kilometerGereden { get; set; }
         [Required]
-        public User? bestuurder { get; set; }
+        public UserDto? bestuurder { get; set; }
         [Required]
         public string beginAdres { get; set; }
         [Required]
@@ -25,4 +25,5 @@ namespace DemoCovadis.Entities
         [Required]
         public string aankomstTijd { get; set; }
     }
-}
+}   
+

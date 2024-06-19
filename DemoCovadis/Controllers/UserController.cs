@@ -1,5 +1,5 @@
-using CovadisAPI.Entities;
-using CovadisAPI.Services;
+using DemoCovadis.Entities;
+using DemoCovadis.Services;
 using DemoCovadis.Shared;
 using DemoCovadis.Shared.Enums;
 using DemoCovadis.Shared.Requests;

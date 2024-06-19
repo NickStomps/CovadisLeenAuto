@@ -1,5 +1,5 @@
 ﻿@page "/rit"
-@inject UserHttpClient UserHttpClient;
+@inject RitHttpClient RitHttpClient;
 @attribute [Authorize]
 
 @using DemoCovadis.Shared.Dtos;
@@ -11,6 +11,41 @@
 <PageTitle>Home</PageTitle>
 <PageHeader><h5>Rit</h5></PageHeader>
 
-@code {
+@if (Ritten != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rit in Ritten)
+            {
+                <tr>
+                    <td>@rit.id</td>
+                    <td>@rit.AutoId</td>
+                    <td>@rit.auto</td>
+                    <td>@rit.kilometerGereden</td>
+                    <td>@rit.bestuurder</td>
+                    <td>@rit.beginAdres</td>
+                    <td>@rit.eindAdres</td>
+                    <td>@rit.vertrekTijd</td>
+                    <td>@rit.aankomstTijd</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
+@code {
+    public RitDto[] Ritten { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("OnInitializedAsync");
+        Ritten = await RitHttpClient.GetRitten();
+    }
 }

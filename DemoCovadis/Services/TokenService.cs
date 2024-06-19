@@ -1,7 +1,7 @@
 ﻿namespace DemoCovadis.Api.Services;
 
-using CovadisAPI.Context;
-using CovadisAPI.Entities;
+using DemoCovadis.Context;
+using DemoCovadis.Entities;
 using DemoCovadis.Shared.Constants;
 using DemoCovadis.Shared.Enums;
 using Microsoft.EntityFrameworkCore;

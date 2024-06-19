@@ -1,43 +1,45 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DemoCovadis.Entities;
+using DemoCovadis.Services;
+using DemoCovadis.Shared.Enums;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+namespace DemoCovadis.Controllers;
 
-namespace DemoCovadis.Controllers
+[AllowAnonymous]
+[ApiController]
+[Route("[controller]")]
+
+public class RitController(RitService ritService) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RitController : ControllerBase
+    private readonly RitService ritService = ritService;
+    [HttpGet]
+    public IActionResult GetRitten()
     {
-        // GET: api/<RitController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        var ritten = ritService.GetRitten();
+        return Ok(ritten);
+    }
 
-        // GET api/<RitController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+    [HttpGet("{id}")]
+    public IActionResult GetRit(int id)
+    {
+        var rit = ritService.GetRitById(id);
+        return Ok(rit);
+    }
 
-        // POST api/<RitController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+    [Authorize(Roles = nameof(UserRole.Admin))]
+    [HttpPost]
+    public IActionResult CreateRit([FromBody] Rit rit)
+    {
+        var createdUser = ritService.CreateRit(rit);
 
-        // PUT api/<RitController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        return Ok(createdUser);
+    }
 
-        // DELETE api/<RitController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+    [Authorize(Roles = nameof(UserRole.User))]
+    [HttpPut("{id}")]
+    public IActionResult UpdateRit(int id, [FromBody] Rit rit)
+    {
+        throw new NotImplementedException();
     }
 }

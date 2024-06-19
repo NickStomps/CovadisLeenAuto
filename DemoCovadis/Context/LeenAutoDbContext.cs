@@ -1,9 +1,8 @@
-﻿using CovadisAPI.Entities;
-using DemoCovadis.Entities;
+﻿using DemoCovadis.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace CovadisAPI.Context
+namespace DemoCovadis.Context
 {
     public class LeenAutoDbContext : DbContext
     {

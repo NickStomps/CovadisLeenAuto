@@ -1,7 +1,8 @@
 ﻿using DemoCovadis.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-namespace CovadisAPI.Entities
+
+namespace DemoCovadis.Entities
 {
     public class User
     {

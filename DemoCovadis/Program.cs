@@ -1,7 +1,7 @@
-namespace CovadisAPI;
+namespace DemoCovadis;
 
-using CovadisAPI.Context;
-using CovadisAPI.Services;
+using DemoCovadis.Context;
+using DemoCovadis.Services;
 using DemoCovadis.Api.Context;
 using DemoCovadis.Api.Services;
 using DemoCovadis.Shared.Interfaces;
@@ -51,6 +51,7 @@ public class Program
         });
 
         // Add services
+        services.AddTransient<RitService>();
         services.AddTransient<UserService>();
         services.AddTransient<AuthService>();
         services.AddTransient<TokenService>();

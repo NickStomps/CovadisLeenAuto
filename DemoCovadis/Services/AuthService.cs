@@ -1,5 +1,5 @@
-﻿using CovadisAPI.Context;
-using CovadisAPI.Entities;
+﻿using DemoCovadis.Context;
+using DemoCovadis.Entities;
 using DemoCovadis.Shared.Requests;
 using DemoCovadis.Shared.Responses;
 

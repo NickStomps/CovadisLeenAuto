@@ -1,5 +1,6 @@
-﻿using CovadisAPI.Entities;
+﻿using DemoCovadis.Entities;
 using System.ComponentModel.DataAnnotations;
+
 namespace DemoCovadis.Entities
 {
     public class Auto
