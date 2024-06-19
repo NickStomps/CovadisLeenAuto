@@ -1,25 +1,35 @@
-﻿using CovadisAPI.Context;
-using CovadisAPI.Entities;
+﻿using DemoCovadis.Context;
+using DemoCovadis.Entities;
 using DemoCovadis.Shared.Dtos;
 using DemoCovadis.Shared.Enums;
 using DemoCovadis.Shared.Interfaces;
 using DemoCovadis.Shared.Requests;
 using DemoCovadis.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace CovadisAPI.Services
+namespace DemoCovadis.Services
 {
-    public class UserService(LeenAutoDbContext dbContext, ICurrentUserContext userContext)
+    public class UserService
     {
-        private readonly LeenAutoDbContext dbContext = dbContext;
+        private readonly LeenAutoDbContext dbContext;
+        private readonly ICurrentUserContext userContext;
+
+        public UserService(LeenAutoDbContext dbContext, ICurrentUserContext userContext)
+        {
+            this.dbContext = dbContext;
+            this.userContext = userContext;
+        }
 
         public IEnumerable<UserDto> GetUsers()
         {
-            return dbContext.Users.Select(x => new UserDto
+            return dbContext.Users.Include(x => x.Roles).Select(x => new UserDto
             {
                 Id = x.Id,
                 Naam = x.Naam,
-                Email = x.Email
+                Email = x.Email,
+                Roles = x.Roles.Select(r => r.Naam).ToList()
             });
         }
 
@@ -30,7 +40,7 @@ namespace CovadisAPI.Services
                 id = userContext.User.Id;
             }
 
-            var user = dbContext.Users.Find(id);
+            var user = dbContext.Users.Include(x => x.Roles).FirstOrDefault(x => x.Id == id);
 
             if (user == null)
             {
@@ -41,7 +51,8 @@ namespace CovadisAPI.Services
             {
                 Id = user.Id,
                 Naam = user.Naam,
-                Email = user.Email
+                Email = user.Email,
+                Roles = user.Roles.Select(r => r.Naam).ToList()
             };
         }
 
@@ -54,7 +65,8 @@ namespace CovadisAPI.Services
             {
                 Id = user.Id,
                 Naam = user.Naam,
-                Email = user.Email
+                Email = user.Email,
+                Roles = user.Roles.Select(r => r.Naam).ToList()
             };
         }
 

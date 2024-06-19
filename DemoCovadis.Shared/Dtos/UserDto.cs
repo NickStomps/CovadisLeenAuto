@@ -9,5 +9,7 @@ namespace DemoCovadis.Shared.Dtos
         public string Naam { get; set; }
         [Required]
         public string Email { get; set; }
+
+        public List<string> Roles { get; set; } = new List<string>(); 
     }
 }

@@ -6,7 +6,7 @@
 @using DemoCovadis.Shared.Clients;
 @using DemoCovadis.Blazor.Components
 @using Microsoft.AspNetCore.Authorization
-
+@using DemoCovadis.Shared.Requests;
 
 <PageTitle>Home</PageTitle>
 <PageHeader><h5>Users</h5></PageHeader>
@@ -17,8 +17,9 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Naam</th>
                 <th>Email</th>
-                <th>Role</th>
+                <th>Rol</th>
             </tr>
         </thead>
         <tbody>
@@ -28,11 +29,43 @@
                     <td>@user.Id</td>
                     <td>@user.Naam</td>
                     <td>@user.Email</td>
+                    <td>@string.Join(", ", user.Roles)</td>
                 </tr>
             }
         </tbody>
     </table>
 }
+
+
+<div class="d-flex align-items-center login-alignment">
+    <div class="form-login w-100 h-100">
+        <EditForm Model="Request" OnSubmit="CreateUser">
+            <PageHeader><h5>Maak User</h5></PageHeader>
+
+            <div class="form-floating">
+                <InputText id="naam" class="form-control" @bind-Value="Request.Naam" placeholder="Naam" />
+                <label for="naam">Naam</label>
+            </div>
+
+            <div class="form-floating">
+                <InputText id="email" class="form-control" @bind-Value="Request.Email" placeholder="Email" />
+                <label for="email">Email address</label>
+            </div>
+
+            <div class="form-floating">
+                <InputText id="password" class="form-control" @bind-Value="Request.Wachtwoord" placeholder="Password" type="password" />
+                <label for="password">Password</label>
+            </div>
+
+ 
+
+            <br />
+
+            <button class="btn btn-primary w-100 py-2" type="submit">Maak gebruiker</button>
+        </EditForm>
+    </div>
+</div>
+
 
 @code {
     public UserDto[] Users { get; set; }
@@ -46,5 +79,13 @@
     {
         Console.WriteLine("OnInitializedAsync");
         Users = await UserHttpClient.GetUsers();
+    }
+
+    private readonly UserRequest Request = new();
+
+
+    private async Task CreateUser()
+    {
+        
     }
 }
