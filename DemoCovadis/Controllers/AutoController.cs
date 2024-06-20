@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoCovadis.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [ApiController]
     [Route("[controller]")]
     public class AutoController : ControllerBase

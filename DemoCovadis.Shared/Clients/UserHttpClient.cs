@@ -57,22 +57,4 @@ public class UserHttpClient
 
         return createdUser;
     }
-
-    public async Task<UserDto?> UpdateUser(int id, UserRequest request)
-    {
-        var jsonContent = JsonSerializer.Serialize(request);
-        var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-        var response = await client.PutAsync($"/{id}", content);
-
-        if (!response.IsSuccessStatusCode)
-        {
-            return null;
-        }
-
-        var responseContent = await response.Content.ReadAsStringAsync();
-        var updatedUser = JsonSerializer.Deserialize<UserDto>(responseContent, jsonOptions);
-
-        return updatedUser;
-    }
-
 }

@@ -31,6 +31,7 @@ namespace DemoCovadis.Services
 
             yield return new Auto
             {
+                Id = auto.Id,
                 kenteken = auto.kenteken,
                 kilometerStand = auto.kilometerStand,
                 laatsteBestuurderId = auto.laatsteBestuurderId

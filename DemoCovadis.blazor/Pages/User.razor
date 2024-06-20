@@ -37,67 +37,33 @@
     </table>
 }
 
-<div class="d-flex align-items-center login-alignment">
-    <div class="form-login w-100 h-100">
-        <EditForm Model="Request" OnSubmit="CreateUser">
-            <PageHeader><h5>Maak User</h5></PageHeader>
+<div class="d-flex justify-content-center align-items-center login-alignment">
+    <div class="form-user">
+        <PageHeader><h5>Maak User</h5></PageHeader>
 
-            <div class="form-floating">
+        <EditForm Model="Request" OnSubmit="CreateUser">
+            <div class="form-floating mb-3">
                 <InputText id="naam" class="form-control" @bind-Value="Request.Naam" placeholder="Naam" />
                 <label for="naam">Naam</label>
             </div>
 
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <InputText id="email" class="form-control" @bind-Value="Request.Email" placeholder="Email" />
                 <label for="email">Email address</label>
             </div>
 
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <InputText id="password" class="form-control" @bind-Value="Request.Wachtwoord" placeholder="Password" type="password" />
                 <label for="password">Password</label>
             </div>
 
-            <br />
-
             <button class="btn btn-primary w-100 py-2" type="submit">Maak gebruiker</button>
-        </EditForm>
-
-        <EditForm Model="SelectedUserRequest" OnSubmit="UpdateUser">
-            <PageHeader><h5>Update User</h5></PageHeader>
-
-            <div class="form-floating">
-                <select class="form-control" @bind="SelectedUserId">
-                    @foreach (var user in Users)
-                    {
-                        <option value="@user.Id">@user.Naam</option>
-                    }
-                </select>
-                <label for="selectedUser">Select User</label>
-            </div>
-
-            <div class="form-floating">
-                <InputText id="updateNaam" class="form-control" @bind-Value="SelectedUserRequest.Naam" placeholder="Naam" />
-                <label for="updateNaam">Naam</label>
-            </div>
-
-            <div class="form-floating">
-                <InputText id="updateEmail" class="form-control" @bind-Value="SelectedUserRequest.Email" placeholder="Email" />
-                <label for="updateEmail">Email address</label>
-            </div>
-
-            <br />
-
-            <button class="btn btn-primary w-100 py-2" type="submit">Update gebruiker</button>
         </EditForm>
     </div>
 </div>
 
 @code {
     public UserDto[] Users { get; set; }
-    public int SelectedUserId { get; set; }
-    private readonly UserRequest Request = new();
-    private readonly UserRequest SelectedUserRequest = new();
-
     protected override void OnInitialized()
     {
         Console.WriteLine("OnInitialized");
@@ -109,32 +75,11 @@
         Users = await UserHttpClient.GetUsers();
     }
 
+    private readonly UserRequest Request = new();
+
     private async Task CreateUser()
     {
         var response = await UserHttpClient.CreateUser(Request);
-
-        if (response is null)
-        {
-            // Handle the error
-            return;
-        }
-
-        // Refresh the user list and navigate back to the list page
-        Users = await UserHttpClient.GetUsers();
-        NavigationManager.NavigateTo("/user");
-    }
-
-    private async Task UpdateUser()
-    {
-        var response = await UserHttpClient.UpdateUser(SelectedUserId, SelectedUserRequest);
-
-        if (response is null)
-        {
-            // Handle the error
-            return;
-        }
-
-        // Refresh the user list and navigate back to the list page
         Users = await UserHttpClient.GetUsers();
         NavigationManager.NavigateTo("/user");
     }
