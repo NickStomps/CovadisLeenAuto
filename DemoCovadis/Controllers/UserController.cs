@@ -43,7 +43,12 @@ public class UserController(UserService userService) : ControllerBase
     [HttpPut("{id}")]
     public IActionResult UpdateUser(int id, [FromBody] User user)
     {
-        throw new NotImplementedException();
+        var updatedUser = userService.UpdateUser(id, user);
+        if (updatedUser == null)
+        {
+            return NotFound();
+        }
+        return Ok(updatedUser);
     }
 
     [Authorize(Roles = nameof(UserRole.Admin) + "," + nameof(UserRole.User))]

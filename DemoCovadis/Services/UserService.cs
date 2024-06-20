@@ -70,9 +70,17 @@ namespace DemoCovadis.Services
             };
         }
 
-        public UserDto? UpdateUser(int id, User user)
+        public User? UpdateUser(int id, User user)
         {
-            throw new NotImplementedException();
+            var existingUser = dbContext.Users.Find(id);
+            if (existingUser == null)
+            {
+                return null;
+            }
+            existingUser.Naam = user.Naam;
+            existingUser.Email = user.Email;
+            dbContext.SaveChanges();
+            return existingUser;
         }
 
         public AssignRoleResponse? AssignRole(AssignRoleRequest request)
