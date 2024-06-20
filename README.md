@@ -2,9 +2,13 @@ Requirements	MoSCow
 
 af:
 Gebruikers kunnen aanmaken.	M
+
 Inlog systeem met verschillende rollen voor medewerkers en beheerder.	M
+
 Beperkte toegang tot het beheerportaal voor een selecte groep mensen.	M
+
 Beheerportaal voor het systeem.	M
+
 Gegevens moeten veilig opgeslagen worden.	M
 
 nog bezig:
