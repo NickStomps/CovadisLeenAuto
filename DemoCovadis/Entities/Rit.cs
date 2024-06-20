@@ -26,3 +26,4 @@ namespace DemoCovadis.Entities
         public string aankomstTijd { get; set; }
     }
 }
+

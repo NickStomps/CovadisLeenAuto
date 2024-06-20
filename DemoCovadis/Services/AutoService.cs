@@ -19,7 +19,7 @@ namespace DemoCovadis.Services
             {
                 kenteken = x.kenteken,
                 kilometerStand = x.kilometerStand,
-                laatsteBestuurder = x.laatsteBestuurder
+                laatsteBestuurderId = x.laatsteBestuurderId
 
             });
         }
@@ -33,8 +33,18 @@ namespace DemoCovadis.Services
             {
                 kenteken = auto.kenteken,
                 kilometerStand = auto.kilometerStand,
-                laatsteBestuurder = auto.laatsteBestuurder
+                laatsteBestuurderId = auto.laatsteBestuurderId
             };
+        }
+
+        public void DeleteAuto(int id)
+        {
+            var auto = dbContext.Autos.FirstOrDefault(x => x.Id == id);
+            if (auto != null)
+            {
+                dbContext.Autos.Remove(auto);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

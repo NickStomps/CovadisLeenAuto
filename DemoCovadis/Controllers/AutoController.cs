@@ -36,5 +36,12 @@ namespace DemoCovadis.Controllers
             return Ok(createdAuto);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAuto(int id)
+        {
+            autoService.DeleteAuto(id);
+            return Ok();
+        }
+
     }
 }

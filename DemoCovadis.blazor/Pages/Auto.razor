@@ -1,5 +1,5 @@
 ﻿@page "/auto"
-@inject UserHttpClient UserHttpClient;
+@inject AutoHttpClient AutoHttpClient;
 @attribute [Authorize]
 
 @using DemoCovadis.Shared.Dtos;
@@ -8,9 +8,44 @@
 @using Microsoft.AspNetCore.Authorization
 
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Auto</PageTitle>
 <PageHeader><h5>Auto</h5></PageHeader>
 
-@code {
+@if (Autos != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Kenteken</th>
+                <th>Kilometer stand</th>
+                <th>Laatste Bestuurder ID</th>
+                <th>Rit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var auto in Autos)
+            {
+                <tr>
+                    <td>@auto.Id</td>
+                    <td>@auto.kenteken</td>
+                    <td>@auto.kilometerStand</td>
+                    <td>@auto.laatsteBestuurderId</td>
+                    <td>@auto.rit</td>
 
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@code {
+    public AutoDto[] Autos { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("OnInitializedAsync");
+        Autos = await AutoHttpClient.GetAutos();
+    }
 }
