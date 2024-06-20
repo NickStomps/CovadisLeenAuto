@@ -3,15 +3,15 @@ using System.Text.Json;
 
 namespace DemoCovadis.Shared.Clients;
 
-public class RitHttpClient
+public class AutoHttpClient
 {
     private readonly HttpClient client;
     private readonly JsonSerializerOptions jsonOptions;
 
-    public RitHttpClient(IHttpClientFactory httpClientFactory)
+    public AutoHttpClient(IHttpClientFactory httpClientFactory)
     {
-        client = httpClientFactory.CreateClient(nameof(RitHttpClient));
-        client.BaseAddress = new Uri("http://localhost:5077/Rit");
+        client = httpClientFactory.CreateClient(nameof(AutoHttpClient));
+        client.BaseAddress = new Uri("http://localhost:5077/Auto");
 
         jsonOptions = new JsonSerializerOptions
         {
@@ -19,7 +19,7 @@ public class RitHttpClient
         };
     }
 
-    public async Task<RitDto[]> GetRitten()
+    public async Task<AutoDto[]> GetAutos()
     {
         var response = await client.GetAsync(string.Empty);
 
@@ -29,13 +29,13 @@ public class RitHttpClient
         }
 
         var content = await response.Content.ReadAsStringAsync();
-        var ritten = JsonSerializer.Deserialize<RitDto[]>(content, jsonOptions);
+        var autos = JsonSerializer.Deserialize<AutoDto[]>(content, jsonOptions);
 
-        if (ritten is null)
+        if (autos is null)
         {
             return [];
         }
 
-        return ritten;
+        return autos;
     }
 }

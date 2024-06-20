@@ -8,7 +8,7 @@
 @using Microsoft.AspNetCore.Authorization
 
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Rit</PageTitle>
 <PageHeader><h5>Rit</h5></PageHeader>
 
 @if (Ritten != null)
@@ -47,35 +47,6 @@
 
 }
 
-<div class="d-flex align-items-center login-alignment">
-    <div class="form-login w-100 h-100">
-        <EditForm Model="Request" OnSubmit="CreateRit">
-            <PageHeader><h5>Maak User</h5></PageHeader>
-
-            <div class="form-floating">
-                <InputText id="naam" class="form-control" @bind-Value="Request.Naam" placeholder="Naam" />
-                <label for="naam">Naam</label>
-            </div>
-
-            <div class="form-floating">
-                <InputText id="email" class="form-control" @bind-Value="Request.Email" placeholder="Email" />
-                <label for="email">Email address</label>
-            </div>
-
-            <div class="form-floating">
-                <InputText id="password" class="form-control" @bind-Value="Request.Wachtwoord" placeholder="Password" type="password" />
-                <label for="password">Password</label>
-            </div>
-
-
-
-            <br />
-
-            <button class="btn btn-primary w-100 py-2" type="submit">Maak Rit</button>
-        </EditForm>
-    </div>
-</div>
-
 @code {
     public RitDto[] Ritten { get; set; }
 
@@ -83,10 +54,5 @@
     {
         Console.WriteLine("OnInitializedAsync");
         Ritten = await RitHttpClient.GetRitten();
-    }
-
-    public async Task CreateRit()
-    {
-        await RitHttpClient.CreateRit(Request);
     }
 }

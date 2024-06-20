@@ -51,6 +51,7 @@ public class Program
         });
 
         // Add services
+        services.AddTransient<AutoService>();
         services.AddTransient<RitService>();
         services.AddTransient<UserService>();
         services.AddTransient<AuthService>();

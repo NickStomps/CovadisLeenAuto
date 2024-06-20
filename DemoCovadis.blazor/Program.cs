@@ -5,8 +5,6 @@ using DemoCovadis.Blazor.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using DemoCovadis.Blazor.Handler;
 using DemoCovadis.Shared.Interfaces;
-using DemoCovadis.Blazor;
-using DemoCovadis.Shared.Clients;
 
 namespace DemoCovadis.Blazor
 {
@@ -28,6 +26,9 @@ namespace DemoCovadis.Blazor
 
             builder.Services.AddScoped<RitHttpClient>();
             builder.Services.AddHttpClient(nameof(RitHttpClient)).AddHttpMessageHandler<AuthorizationMessageHandler>();
+
+            builder.Services.AddScoped<AutoHttpClient>();
+            builder.Services.AddHttpClient(nameof(AutoHttpClient)).AddHttpMessageHandler<AuthorizationMessageHandler>();
 
             builder.Services.AddScoped<AuthHttpClient>();
 
