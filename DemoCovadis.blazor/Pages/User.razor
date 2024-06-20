@@ -1,11 +1,12 @@
 ﻿@page "/user"
 @inject UserHttpClient UserHttpClient;
+@inject NavigationManager NavigationManager;
 @attribute [Authorize]
 
 @using DemoCovadis.Shared.Dtos;
 @using DemoCovadis.Shared.Clients;
-@using DemoCovadis.Blazor.Components
-@using Microsoft.AspNetCore.Authorization
+@using DemoCovadis.Blazor.Components;
+@using Microsoft.AspNetCore.Authorization;
 @using DemoCovadis.Shared.Requests;
 
 <PageTitle>Home</PageTitle>
@@ -36,7 +37,6 @@
     </table>
 }
 
-
 <div class="d-flex align-items-center login-alignment">
     <div class="form-login w-100 h-100">
         <EditForm Model="Request" OnSubmit="CreateUser">
@@ -57,22 +57,50 @@
                 <label for="password">Password</label>
             </div>
 
- 
-
             <br />
 
             <button class="btn btn-primary w-100 py-2" type="submit">Maak gebruiker</button>
         </EditForm>
+
+        <EditForm Model="SelectedUserRequest" OnSubmit="UpdateUser">
+            <PageHeader><h5>Update User</h5></PageHeader>
+
+            <div class="form-floating">
+                <select class="form-control" @bind="SelectedUserId">
+                    @foreach (var user in Users)
+                    {
+                        <option value="@user.Id">@user.Naam</option>
+                    }
+                </select>
+                <label for="selectedUser">Select User</label>
+            </div>
+
+            <div class="form-floating">
+                <InputText id="updateNaam" class="form-control" @bind-Value="SelectedUserRequest.Naam" placeholder="Naam" />
+                <label for="updateNaam">Naam</label>
+            </div>
+
+            <div class="form-floating">
+                <InputText id="updateEmail" class="form-control" @bind-Value="SelectedUserRequest.Email" placeholder="Email" />
+                <label for="updateEmail">Email address</label>
+            </div>
+
+            <br />
+
+            <button class="btn btn-primary w-100 py-2" type="submit">Update gebruiker</button>
+        </EditForm>
     </div>
 </div>
 
-
 @code {
     public UserDto[] Users { get; set; }
+    public int SelectedUserId { get; set; }
+    private readonly UserRequest Request = new();
+    private readonly UserRequest SelectedUserRequest = new();
+
     protected override void OnInitialized()
     {
         Console.WriteLine("OnInitialized");
-        //Users = UserHttpClient.GetUsers();
     }
 
     protected override async Task OnInitializedAsync()
@@ -81,11 +109,33 @@
         Users = await UserHttpClient.GetUsers();
     }
 
-    private readonly UserRequest Request = new();
-
-
     private async Task CreateUser()
     {
-        
+        var response = await UserHttpClient.CreateUser(Request);
+
+        if (response is null)
+        {
+            // Handle the error
+            return;
+        }
+
+        // Refresh the user list and navigate back to the list page
+        Users = await UserHttpClient.GetUsers();
+        NavigationManager.NavigateTo("/user");
+    }
+
+    private async Task UpdateUser()
+    {
+        var response = await UserHttpClient.UpdateUser(SelectedUserId, SelectedUserRequest);
+
+        if (response is null)
+        {
+            // Handle the error
+            return;
+        }
+
+        // Refresh the user list and navigate back to the list page
+        Users = await UserHttpClient.GetUsers();
+        NavigationManager.NavigateTo("/user");
     }
 }
