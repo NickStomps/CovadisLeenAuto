@@ -11,7 +11,7 @@ namespace DemoCovadis.Entities
         public string kenteken { get; set; }
         [Required]
         public int kilometerStand { get; set; }
-        public User? laatsteBestuurder { get; set; }
+        public int laatsteBestuurderId { get; set; }
         public virtual  List<Rit>? rit { get; set; }
     }
 }

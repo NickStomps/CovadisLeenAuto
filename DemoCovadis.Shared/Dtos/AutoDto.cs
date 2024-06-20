@@ -11,6 +11,6 @@ public class AutoDto
     public string kenteken { get; set; }
     [Required]
     public int kilometerStand { get; set; }
-    public UserDto? laatsteBestuurder { get; set; }
+    public int laatsteBestuurderId { get; set; }
     public virtual List<RitDto>? rit { get; set; }
 }
